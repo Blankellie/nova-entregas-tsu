@@ -11,7 +11,7 @@ $('#form-login').addEventListener('submit', async (e) => {
   const f = new FormData(e.target);
   try {
     const { token } = await login(f.get('usuario'), f.get('clave'));
-    sessionStorage.setItem('nova_token', token); // con backend real, este token se manda en cada petición
+    sessionStorage.setItem('nova_token', token); 
     abrirPanel();
   } catch (err) { $('#login-estado').textContent = err.message; }
 });

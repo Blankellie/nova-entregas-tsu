@@ -1,6 +1,6 @@
 /* =====================================================================
    Nova Entregas - estilos
-   Secciones (búscalas por el título):
+   Secciones:
    1. Variables y base      5. Banner + cotizador      9. Panel admin
    2. Logo y botones        6. Tabla de precios       10. Móvil
    3. Navbar                7. Contacto               11. Movimiento reducido
@@ -149,6 +149,3 @@ footer .logo img{height:60px}
   .banner{padding:1.5rem}
   .precios h2{-webkit-text-stroke:9px var(--azul)}
 }
-
-/* ---- 11. Si la persona pidió menos movimiento en su sistema, apagamos animaciones ---- */
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}

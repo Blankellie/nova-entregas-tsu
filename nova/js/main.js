@@ -48,7 +48,7 @@ async function cargarDatos() {
 
 // >>> AQUÍ SE CALCULA EL PRECIO DEL DELIVERY <<<
 // precio en $  = el de la tarifa donde cae el km  (tabla que edita el admin)
-// precio en Bs = precio en $  x  tasa BCV del día (la que escribe el admin)
+// precio en Bs = precio en $  x  tasa del día (la que escribe el admin)
 function calcularPrecio(km) {
   const kmRedondeado = Math.round(km * 10) / 10; // los rangos van de 0.1 en 0.1 (2 km -> 2.1 km)
   const tarifa = datos.zona.tarifas.find((t) => kmRedondeado >= t.desde && kmRedondeado <= t.hasta);
@@ -65,7 +65,7 @@ function pintarPrecios() {
 
   // La fecha viene como 2026-10-08, la mostramos como 08/10/2026
   const fecha = datos.tasa.fecha.split('-').reverse().join('/');
-  $('#tasa-info').textContent = `Tasa BCV del ${fecha}: Bs ${formatearBs(datos.tasa.bs_por_usd)}`;
+  $('#tasa-info').textContent = `Tasa del ${fecha}: Bs ${formatearBs(datos.tasa.bs_por_usd)}`;
 
   // Una tarjeta por tarifa: adelante en dólares, atrás en bolívares (con la tasa del día)
   contenedor.innerHTML = datos.zona.tarifas.map((t) => `
@@ -80,7 +80,6 @@ function pintarPrecios() {
       </span>
     </button>`).join('');
 
-  // En PC voltea con hover (lo hace el CSS). En el celular no hay hover, así que con toque:
   contenedor.querySelectorAll('.flip').forEach((tarjeta) => {
     tarjeta.addEventListener('click', () => tarjeta.classList.toggle('voltea'));
   });
@@ -116,12 +115,11 @@ function dibujarRuta(puntos) {
 
 /* ------------------------------------------------------------------
    GOOGLE MAPS (autocompletar direcciones + calcular km por la ruta real)
-   Solo se carga si hay API key en js/config.js
 ------------------------------------------------------------------ */
 let googleListo = false;
 
 function cargarGoogleMaps() {
-  if (!GOOGLE_MAPS_API_KEY) return; // sin key: el cotizador usa los km escritos a mano
+  if (!GOOGLE_MAPS_API_KEY) return;
   window.iniciarGoogle = () => {
     googleListo = true;
     // Sugerencias de direcciones, solo en Venezuela
