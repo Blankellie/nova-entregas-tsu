@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel admin | Nova Entregas</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin">
+<main>
+  <a href="index.html" class="volver">← Volver al sitio</a>
+
+  <!-- LOGIN (en modo prueba: usuario "admin", clave "nova123", se cambian en js/config.js) -->
+  <section id="login" class="caja">
+    <h1>Panel de administración</h1>
+    <form id="form-login">
+      <input name="usuario" placeholder="Usuario" autocomplete="username" required>
+      <input name="clave" type="password" placeholder="Clave" autocomplete="current-password" required>
+      <button class="btn">Entrar</button><p id="login-estado" role="status"></p>
+    </form>
+  </section>
+
+  <div id="panel" hidden>
+    <!-- ==============================================================
+         AQUÍ EL ADMINISTRADOR CAMBIA LA TASA BCV DEL DÍA
+         Se usa para pasar los precios de dólares a bolívares en TODO el sitio.
+         ============================================================== -->
+    <section class="caja">
+      <h2>Tasa BCV del día</h2>
+      <form id="form-tasa">
+        <label for="tasa">Bs por cada $1</label>
+        <input id="tasa" type="number" min="0" step="0.01" required>
+        <button class="btn">Guardar tasa</button><p id="tasa-estado" role="status"></p>
+      </form>
+    </section>
+
+    <!-- ==============================================================
+         AQUÍ EL ADMINISTRADOR EDITA LOS PRECIOS DEL DELIVERY
+         Cada fila = un rango de km con su precio en dólares.
+         Puede cambiar los montos, los rangos, o agregar y quitar filas.
+         ============================================================== -->
+    <section class="caja">
+      <h2>Precios del delivery (en dólares)</h2>
+      <label for="zona-nombre">Nombre de la zona</label>
+      <input id="zona-nombre" required>
+      <table><thead><tr><th>Desde (km)</th><th>Hasta (km)</th><th>Precio ($)</th><th></th></tr></thead><tbody id="filas"></tbody></table>
+      <button type="button" id="agregar" class="btn secundario">+ Agregar rango</button>
+      <button type="button" id="guardar-precios" class="btn">Guardar precios</button>
+      <p id="precios-estado" role="status"></p>
+    </section>
+  </div>
+</main>
+<script type="module" src="js/admin.js"></script>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nova Entregas | Delivery de última milla en Maracaibo</title>
+<meta name="description" content="Entregas rápidas y seguras en Maracaibo para restaurantes, retail y ecommerce. Cotiza tu envío.">
+<meta property="og:title" content="Nova Entregas"><meta property="og:description" content="Si es en Maracaibo, nosotros te lo entregamos.">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- BARRA DE NAVEGACIÓN: queda fija arriba al hacer scroll -->
+<header class="nav">
+  <a class="logo" href="#inicio" aria-label="Nova Entregas"><img src="assets/img/logo-nova.png" alt="Nova" width="110" height="48"></a>
+  <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav aria-label="Principal"><a href="#contacto">CONTACTO</a><a href="#precios">PRECIOS</a><a href="#servicios">SERVICIOS</a><a href="#inicio" class="active">INICIO</a></nav>
+</header>
+
+<main>
+<!-- INICIO: presentación + botón "Seamos Panas". Foto del repartidor: assets/img/repartidor.png -->
+<section id="inicio" class="hero">
+  <div class="hero-txt">
+    <div class="hero-logo"><img class="logo-grande" src="assets/img/logo-nova.png" alt="Nova" width="420" height="184"></div>
+    <h1>ENTREGAS</h1>
+    <p>¡HAZ TUS ENVÍOS CON NOSOTROS! SI ES EN MARACAIBO, NOSOTROS TE LO ENTREGAMOS. CON ATENCIÓN PERSONALIZADA, SEGURO PARA TI.</p>
+    <a class="btn" href="#contacto">Seamos Panas</a>
+  </div>
+  <div class="circulo"><img src="assets/img/repartidor.png" alt="Repartidor de Nova en moto con bolso azul" width="600" height="600"></div>
+</section>
+
+<!-- SERVICIOS: las 3 columnas. Los emojis son temporales-->
+<section id="servicios" class="servicios">
+  <span class="etiqueta">SERVICIOS</span><h2>¿POR QUÉ FUNCIONA?</h2>
+  <div class="cols">
+    <article><div class="ilu" aria-hidden="true">📱</div><h3>FÁCIL DE PEDIR</h3><p>Realiza tu pedido de donde quiera que estés, sin restricciones.</p></article>
+    <article><div class="ilu" aria-hidden="true">🛵</div><h3>DELIVERY RÁPIDO</h3><p>Envía y recibe en tiempo récord, sin retrasos, sin dudas, sin pérdidas.</p></article>
+    <article><div class="ilu" aria-hidden="true">📍</div><h3>FÁCIL DE RECIBIR</h3><p>Recibe en cualquier rincón de Maracaibo, con la mejor logística de la ciudad.</p></article>
+  </div>
+</section>
+
+<!-- =====================================================================
+     BANNER + MAPA + COTIZADOR
+     - El mapa lo dibuja Leaflet dentro de #mapa (ver js/main.js).
+     - COTIZADOR: la persona escribe dirección de origen y destino. Google Maps calcula
+       los km y el precio sale de la tabla de precios x la tasa BCV del día.
+       Para activar Google Maps pega tu API key en js/config.js.
+       Si no hay key, escribe los km a mano en el campo "Distancia".
+     ===================================================================== -->
+<section class="banner">
+  <div>
+    <img class="logo-grande" src="assets/img/logo-nova.png" alt="Nova" width="420" height="184">
+    <h2>ES LA MEJOR FORMA DE HACER TUS ENVÍOS</h2>
+    <p>Somos una empresa de logística de última milla, especializada en entregas para Restaurantes, Retail y Ecommerce.</p>
+    <form id="cotizador" class="cot" novalidate>
+      <input id="origen" placeholder="Dirección de recogida" aria-label="Dirección de recogida" autocomplete="off">
+      <input id="destino" placeholder="Dirección de entrega" aria-label="Dirección de entrega" autocomplete="off">
+      <label for="km">Distancia (km)</label>
+      <input id="km" type="number" min="0" max="8" step="0.1" placeholder="Ej: 3.5">
+      <button class="btn">Cotiza tu Envío</button>
+      <output id="cot-res" aria-live="polite"></output>
+    </form>
+  </div>
+  <div id="mapa" role="region" aria-label="Mapa de Maracaibo"></div>
+</section>
+
+<!-- =====================================================================
+     TABLA DE PRECIOS
+     Las tarjetas NO se escriben aquí: JS las crea con los datos que vienen de la base de datos
+     (js/services/api.js -> getZonasPrecios).
+       * PARA CAMBIAR LOS PRECIOS DEL DELIVERY -> panel admin (admin.html), tabla "Precios del delivery"
+       * PARA CAMBIAR LA TASA BCV DEL DÍA      -> panel admin (admin.html), cuadro "Tasa BCV del día"
+     ===================================================================== -->
+<section id="precios" class="precios">
+  <h2>TABLA DE<br>PRECIOS</h2>
+  <p id="zona-nombre" class="zona">ZONA ESTE - NORTE</p>
+  <p id="tasa-info" class="tasa">Cargando tasa BCV…</p>
+  <div id="tarjetas" class="tarjetas"><p>Cargando…</p></div>
+</section>
+
+<!-- CONTACTO: datos y botón de WhatsApp. El teléfono es la imagen assets/img/telefono-whatsapp.png -->
+<section id="contacto" class="contacto">
+  <div class="contacto-txt">
+    <span class="etiqueta contorno">CONTACTO</span>
+    <h2>¡PONTE EN CONTACTO<br>CON NOVA!</h2>
+    <p class="intro">¿BUSCAS ATENCIÓN PERSONALIZADA Y COTIZAR TU PEDIDO?<br>CONSULTA EN NUESTROS MÉTODOS DE CONTACTO:</p>
+    <!-- DATOS DE CONTACTO: aquí cambias teléfonos, correo e Instagram -->
+    <ul class="datos">
+      <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.56 3.5a1 1 0 01-.25 1z"/></svg></span>
+        <a href="tel:+584246943290">0424-6943290</a>&nbsp;|&nbsp;<a href="tel:+584220888042">0422-888042</a></li>
+      <li><span class="ico"><svg class="linea" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span>
+        <a href="mailto:Soporte@novaentregas.com">Soporte@novaentregas.com</a></li>
+      <li><span class="ico insta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 4.5A4.5 4.5 0 1016.5 12 4.5 4.5 0 0012 7.5zm0 2A2.5 2.5 0 1114.5 12 2.5 2.5 0 0112 9.5zM17.3 6a1.2 1.2 0 101.2 1.2A1.2 1.2 0 0017.3 6z"/></svg></span>
+        <a href="https://instagram.com/novaentregas.mcbo" target="_blank" rel="noopener">@novaentregas.mcbo</a></li>
+    </ul>
+    <!-- BOTÓN DE WHATSAPP: el número va en la URL, el mensaje precargado después de text= -->
+    <a class="btn" target="_blank" rel="noopener" href="https://wa.me/584246943290?text=Hola%20amigos%2C%20necesito%20su%20ayuda">Envía un Mensaje</a>
+  </div>
+  <img class="telefono" src="assets/img/telefono-whatsapp.png" alt="Conversación de WhatsApp con Nova Entregas" width="371" height="486" loading="lazy">
+</section>
+
+<!-- FORMULARIO DE CONTACTO: los mensajes se envían a js/services/api.js -> enviarContacto (POST /api/contacto) -->
+<section class="escribenos">
+  <h2>ESCRÍBENOS</h2>
+  <form id="form-contacto" novalidate>
+    <input name="nombre" placeholder="Nombre" aria-label="Nombre" required minlength="2">
+    <input name="correo" type="email" placeholder="Correo" aria-label="Correo" required>
+    <textarea name="mensaje" placeholder="Mensaje" aria-label="Mensaje" required minlength="5"></textarea>
+    <button class="btn">Enviar</button><p id="estado" role="status"></p>
+  </form>
+</section>
+</main>
+
+<!-- FOOTER: el año se pone solo con JS. El ícono de la derecha lleva al panel de administración -->
+<footer>
+  <span class="logo"><img src="assets/img/logo-nova.png" alt="Nova" width="110" height="48"></span>
+  <span>Maracaibo, Venezuela</span>
+  <span>© <span id="anio"></span> Nova Entregas. Todos los derechos reservados. </span>
+  <!-- ACCESO AL PANEL ADMIN: solo el ícono, sin texto. El ícono original está en assets/icons/admin.svg -->
+  <a class="admin-link" href="admin.html" aria-label="Panel de administración" title="Panel de administración"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 11V1H9v10h4zM15 15v-2H1v2h14zM7 5v6H3V5h4z"/></svg></a>
+</footer>
+
+<!-- Leaflet tiene que cargar ANTES que main.js, si no "L" no existe -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="js/main.js"></script>
+</body></html>

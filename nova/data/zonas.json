@@ -1,0 +1,4 @@
+[{"id":1,"nombre":"Zona Este - Norte","tarifas":[
+{"id":1,"desde":0,"hasta":2,"usd":1.5},
+{"id":2,"desde":2.1,"hasta":5,"usd":2},
+{"id":3,"desde":5.1,"hasta":8,"usd":3}]}]
